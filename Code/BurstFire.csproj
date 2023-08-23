@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BurstRoundTiming.cs" />
     <Compile Include="ExponentialRoundTiming.cs" />
     <Compile Include="ISubsystemFunctionFiring.cs" />
     <Compile Include="ModLink.cs" />

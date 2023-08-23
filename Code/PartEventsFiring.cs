@@ -39,7 +39,7 @@ namespace EchKode.PBMods.BurstFire
 					duration,
 					subactions?.Count ?? 0);
 			}
-			
+
 			var subsystemsInPart = EquipmentUtility.GetSubsystemsInPart(part);
 			if (subsystemsInPart == null)
 			{
@@ -72,27 +72,83 @@ namespace EchKode.PBMods.BurstFire
 					continue;
 				}
 
-				if (functionName != "ExponentialRoundTiming")
+				switch (functionName)
 				{
-					continue;
+					case "ExponentialRoundTiming":
+						ExponentialRoundTiming(
+							subsystem,
+							context,
+							action,
+							startTime,
+							duration,
+							subactions,
+							data.customProcessed);
+						break;
+					case "BurstRoundTiming":
+						BurstRoundTiming(
+							subsystem,
+							context,
+							action,
+							startTime,
+							duration,
+							subactions,
+							data.customProcessed);
+						break;
 				}
-
-				var ok = data.customProcessed.TryGetFloat("timeFrom", out var timeFrom);
-				ok &= data.customProcessed.TryGetFloat("timeTo", out var timeTo);
-				ok &= data.customProcessed.TryGetFloat("exponent", out var exponent);
-				if (!ok)
-				{
-					continue;
-				}
-
-				var ert = new ExponentialRoundTiming()
-				{
-					timeFrom = timeFrom,
-					timeTo = timeTo,
-					exponent = exponent,
-				};
-				ert.OnPartEventFiring(subsystem, context, action, startTime, duration, subactions);
 			}
+		}
+
+		static void ExponentialRoundTiming(
+			EquipmentEntity subsystem,
+			string context,
+			ActionEntity action,
+			float startTime,
+			float duration,
+			List<ActionEntity> subactions,
+			DataBlockPartCustom customProcessed)
+		{
+			var ok = customProcessed.TryGetFloat("timeFrom", out var timeFrom);
+			ok &= customProcessed.TryGetFloat("timeTo", out var timeTo);
+			ok &= customProcessed.TryGetFloat("exponent", out var exponent);
+			if (!ok)
+			{
+				return;
+			}
+
+			var ert = new ExponentialRoundTiming()
+			{
+				timeFrom = timeFrom,
+				timeTo = timeTo,
+				exponent = exponent,
+			};
+			ert.OnPartEventFiring(subsystem, context, action, startTime, duration, subactions);
+		}
+
+		static void BurstRoundTiming(
+			EquipmentEntity subsystem,
+			string context,
+			ActionEntity action,
+			float startTime,
+			float duration,
+			List<ActionEntity> subactions,
+			DataBlockPartCustom customProcessed)
+		{
+			var ok = customProcessed.TryGetFloat("burst0", out var burst0);
+			ok &= customProcessed.TryGetFloat("burst1", out var burst1);
+			ok &= customProcessed.TryGetFloat("burst2", out var burst2);
+			ok &= customProcessed.TryGetFloat("burst3", out var burst3);
+			ok &= customProcessed.TryGetFloat("burst4", out var burst4);
+			ok &= customProcessed.TryGetFloat("burst5", out var burst5);
+			if (!ok)
+			{
+				return;
+			}
+			var burstTimings = new List<float>() { burst0, burst1, burst2, burst3, burst4, burst5, };
+			var brt = new BurstRoundTiming()
+			{
+				burstTimings = burstTimings,
+			};
+			brt.OnPartEventFiring(subsystem, context, action, startTime, duration, subactions);
 		}
 	}
 }
