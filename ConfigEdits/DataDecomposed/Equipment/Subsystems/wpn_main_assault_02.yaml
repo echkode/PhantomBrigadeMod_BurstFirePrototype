@@ -1,0 +1,14 @@
+removed: false
+edits:
+- 'stats.act_count.value: 6'
+- 'stats.act_duration.value: 1'
+- 'custom: !d'
+- 'custom.floats: !d'
+- 'custom.floats.burst0: 0.08'
+- 'custom.floats.burst1: 0.16'
+- 'custom.floats.burst2: 0.24'
+- 'custom.floats.burst3: 0.76'
+- 'custom.floats.burst4: 0.84'
+- 'custom.floats.burst5: 0.92'
+- 'custom.strings: !d'
+- 'custom.strings.firingFunction: BurstRoundTiming'
