@@ -1,0 +1,7 @@
+removed: false
+edits:
+- 'stats.act_duration.value: 4'
+- 'activation.timing: !d'
+- 'activation.timing.timeFrom: 0.1'
+- 'activation.timing.timeTo: 0.95'
+- 'activation.timing.exponent: 0.75'
