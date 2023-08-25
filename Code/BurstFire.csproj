@@ -81,6 +81,7 @@
     <Compile Include="Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterFunctions.cs" />
+    <Compile Include="TracerTargeted.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
