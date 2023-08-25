@@ -8,6 +8,9 @@ using HarmonyLib;
 
 using PhantomBrigade.Data;
 using PBEquipmentActionSystem = PhantomBrigade.Combat.Systems.EquipmentActionSystem;
+using PBScheduledAttackSystem = PhantomBrigade.Combat.Systems.ScheduledAttackSystem;
+
+using UnityEngine;
 
 namespace EchKode.PBMods.BurstFire
 {
@@ -16,7 +19,7 @@ namespace EchKode.PBMods.BurstFire
 	{
 		[HarmonyPatch(typeof(PBEquipmentActionSystem), "Execute", new System.Type[] { typeof(List<CombatEntity>) })]
 		[HarmonyTranspiler]
-		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+		static IEnumerable<CodeInstruction> Execute_Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
 		{
 			var subactionList = generator.DeclareLocal(typeof(List<ActionEntity>));
 			var cm = new CodeMatcher(instructions, generator);
@@ -115,6 +118,66 @@ namespace EchKode.PBMods.BurstFire
 				new CodeInstruction(OpCodes.Call, partEventActionMethod),
 			};
 			cm.InsertAndAdvance(partEventsActionCall);
+
+			return cm.InstructionEnumeration();
+		}
+
+		[HarmonyPatch(typeof(PBScheduledAttackSystem), "ProcessProjectiles", new[]
+		{
+			typeof(float),
+			typeof(CombatEntity),
+			typeof(EquipmentEntity),
+			typeof(ActionEntity),
+			typeof(ActionEntity),
+		})]
+		[HarmonyTranspiler]
+		static IEnumerable<CodeInstruction> ProcessProjectiles_Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+		{
+			var cm = new CodeMatcher(instructions, generator);
+			var firingDirection = generator.DeclareLocal(typeof(Vector3));
+			var actionArg = cm.MatchEndForward(new CodeMatch(OpCodes.Ldarg_S)).Operand;
+			var subActionArg = cm.MatchStartForward(new CodeMatch(OpCodes.Callvirt, AccessTools.DeclaredPropertyGetter(typeof(ActionEntity), nameof(ActionEntity.ScheduledAttackStart))))
+				.Advance(-1)
+				.Operand;
+			var targetPoint = cm.MatchStartForward(new CodeMatch(OpCodes.Call, AccessTools.DeclaredMethod(typeof(Utilities), nameof(Utilities.GetDirection))))
+				.Advance(-1)
+				.Operand;
+			var firingPoint = cm.Advance(-1).Operand;
+			var projectile = cm.MatchEndForward(new CodeMatch(OpCodes.Callvirt, AccessTools.DeclaredMethod(typeof(Context<CombatEntity>), nameof(Context<CombatEntity>.CreateEntity))))
+				.Advance(1)
+				.Operand;
+			var facing = cm.MatchEndBackwards(new CodeMatch(OpCodes.Callvirt, AccessTools.DeclaredPropertyGetter(typeof(Transform), nameof(Transform.forward))))
+				.Advance(1)
+				.Operand;
+			var forwardJumpLabels = cm.Advance(1).Labels;
+			// Firing direction gets modified by scatter angle so preserve a copy of the direction before that modification happens.
+			var storeDirection = new[]
+			{
+				new CodeInstruction(OpCodes.Ldloc_S, facing),
+				new CodeInstruction(OpCodes.Stloc_S, firingDirection),
+			};
+			var itfCall = new[]
+			{
+				new CodeInstruction(OpCodes.Ldarg_3),  // part
+				new CodeInstruction(OpCodes.Ldstr, PartEventsProjectileCreated.OnPartProjectileCreated),
+				new CodeInstruction(OpCodes.Ldarg_S, actionArg),
+				new CodeInstruction(OpCodes.Ldarg_S, subActionArg),
+				new CodeInstruction(OpCodes.Ldarg_1),  // current time
+				new CodeInstruction(OpCodes.Ldarg_2),  // owner
+				new CodeInstruction(OpCodes.Ldloc_S, projectile),
+				new CodeInstruction(OpCodes.Ldloc_S, firingPoint),
+				new CodeInstruction(OpCodes.Ldloc_S, firingDirection),
+				new CodeInstruction(OpCodes.Ldloc_S, targetPoint),
+				new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(PartEventsProjectileCreated), nameof(PartEventsProjectileCreated.OnPartEventProjectileCreated))),
+			};
+
+			cm.Insert(storeDirection);
+			cm.AddLabels(forwardJumpLabels);
+			cm.Advance(storeDirection.Length);
+			cm.Labels.Clear();
+			cm.MatchEndForward(new CodeMatch(OpCodes.Call, AccessTools.DeclaredMethod(typeof(PBScheduledAttackSystem), nameof(PBScheduledAttackSystem.AddInflictedDamageComponents))))
+				.Advance(1)
+				.Insert(itfCall);
 
 			return cm.InstructionEnumeration();
 		}

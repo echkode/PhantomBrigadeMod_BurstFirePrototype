@@ -70,11 +70,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BurstRoundTiming.cs" />
+    <Compile Include="BurstScatter.cs" />
     <Compile Include="ExponentialRoundTiming.cs" />
     <Compile Include="ISubsystemFunctionFiring.cs" />
+    <Compile Include="ISubsystemFunctionProjectileCreated.cs" />
     <Compile Include="ModLink.cs" />
     <Compile Include="ModSettings.cs" />
     <Compile Include="PartEventsFiring.cs" />
+    <Compile Include="PartEventsProjectileCreated.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterFunctions.cs" />
