@@ -1,0 +1,40 @@
+hidden: false
+parent: internal_aux
+rating: 1
+textNameFromPreset: 
+textNameFromHardpoint: 
+textName: 
+textDescFromPreset: 
+textDesc: 
+hardpoints:
+- internal_aux_weapon
+tags:
+statDistribution: ''
+stats:
+visuals: 
+attachments: 
+activation: 
+projectile:
+beam: 
+custom:
+functions: 
+- general:
+  targeted:
+    - contexts:
+      - on_wpn_fired
+      functions:
+      - !EchKode.PBMods.BurstFire.TracerTargeted
+        modulus: 7
+        startingOffset: 2
+        color:
+          colorFrom:
+            r: 1
+            g: 1
+            b: 1
+            a: 1
+          colorTo:
+            r: 1
+            g: 1
+            b: 1
+            a: 1
+  action:
