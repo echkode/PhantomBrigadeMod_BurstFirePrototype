@@ -1,0 +1,6 @@
+removed: false
+edits:
+- 'stats.wpn_impact: !+'
+- 'stats.wpn_impact.value: 39'
+- 'stats.wpn_impact_radius: !+'
+- 'stats.wpn_impact_radius.value: 4'

@@ -1,0 +1,32 @@
+hidden: false
+parent: internal_aux
+rating: 1
+textNameFromPreset: 
+textNameFromHardpoint: 
+textName: 
+textDescFromPreset: 
+textDesc: 
+hardpoints:
+- internal_aux_weapon
+tags:
+statDistribution: ''
+stats:
+  wpn_turnrate_limit:
+    value: 0
+    targetMode: 0
+    targetSocket: ''
+    targetHardpoint: ''
+visuals: 
+attachments: 
+activation: 
+projectile:
+beam: 
+custom:
+  flags:
+  ints:
+  floats:
+    turnrate: 1
+  vectors:
+  strings:
+    projectileCreatedFunction: StrafeProjectileCreated
+functions:
