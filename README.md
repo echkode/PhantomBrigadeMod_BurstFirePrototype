@@ -4,11 +4,11 @@ A library mod for [Phantom Brigade](https://braceyourselfgames.com/phantom-briga
 
 It is compatible with game version **1.1.2-b5993** (Epic/Steam).
 
-This is an example of using a `ISubsystemFunctionGeneral` in conjunction with `PartEventsGeneral` and the `PartEventsGeneral.OnPartActivation` context. The implementation function is named `ExponentialRoundTiming` and it emulates the built-in activation timing feature which changes the firing timing of rounds.
+This is an example of using an `ISubsystemFunctionGeneral` in conjunction with `PartEventsGeneral` and the `PartEventsGeneral.OnPartActivation` context. The implementation function is named `ExponentialRoundTiming` and it emulates the built-in activation timing feature which changes the firing timing of rounds.
 
 I set up a debug scenario in which one mech is equipped with a machine gun that's been modified to have an activation timing block and another mech which is equipped with a similar machine gun that has an `ISubsystemFunctionGeneral` implementation instead to change the round timing in exactly the same way as the activation timing block. The two mechs have nearly identical firing patterns.
 
-<video controls src="">
+<video controls src="https://github.com/echkode/PhantomBrigadeMod_BurstFirePrototype/assets/48565771/6b5c3b57-c284-43d8-a145-dfc0574a0581">
   <p>comparing prototype function implementation to built-in activation timing</p>
 </video>
 
