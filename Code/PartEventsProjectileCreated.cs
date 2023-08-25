@@ -83,6 +83,20 @@ namespace EchKode.PBMods.BurstFire
 							targetPoint,
 							data.customProcessed);
 						break;
+					case "StrafeProjectileCreated":
+						StrafeProjectileCreated(
+							subsystem,
+							context,
+							action,
+							subaction,
+							currentTime,
+							owner,
+							projectile,
+							firingPoint,
+							firingDirection,
+							targetPoint,
+							data.customProcessed);
+						break;
 				}
 			}
 		}
@@ -111,6 +125,43 @@ namespace EchKode.PBMods.BurstFire
 				roundsPerBurst = rpb,
 			};
 			bs.OnPartProjectileCreated(
+				subsystem,
+				context,
+				action,
+				subaction,
+				currentTime,
+				owner,
+				projectile,
+				firingPoint,
+				firingDirection,
+				targetPoint);
+		}
+
+
+		private static void StrafeProjectileCreated(
+			EquipmentEntity subsystem,
+			string context,
+			ActionEntity action,
+			ActionEntity subaction,
+			float currentTime,
+			CombatEntity owner,
+			CombatEntity projectile,
+			Vector3 firingPoint,
+			Vector3 firingDirection,
+			Vector3 targetPoint,
+			DataBlockPartCustom customProcessed)
+		{
+			var ok = customProcessed.TryGetFloat("turnrate", out var turnrate);
+			if (!ok)
+			{
+				return;
+			}
+
+			var spc = new StrafeProjectileCreated()
+			{
+				turnrate = turnrate,
+			};
+			spc.OnPartProjectileCreated(
 				subsystem,
 				context,
 				action,
