@@ -4,9 +4,9 @@ A library mod for [Phantom Brigade](https://braceyourselfgames.com/phantom-briga
 
 It is compatible with game version **1.1.2-b5993** (Epic/Steam).
 
-Here's a lateral strafing fire pattern that leverages the same interface function that I made for the [burst scatter branch](). This is a bit simpler because it doesn't change the timing of the rounds.
+Here's a lateral strafing fire pattern that leverages the same interface function that I made for the [burst scatter branch](https://github.com/echkode/PhantomBrigadeMod_BurstFirePrototype/tree/burst_scatter). This is a bit simpler because it doesn't change the timing of the rounds.
 
-<video controls src="">
+<video controls src="https://github.com/echkode/PhantomBrigadeMod_BurstFirePrototype/assets/48565771/0f7ea8ae-ff27-431f-b6c9-7d934d7dc89a">
   <p>laterally strafing a wall</p>
 </video>
 
