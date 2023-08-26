@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿// Copyright (c) 2023 EchKode
+// SPDX-License-Identifier: BSD-3-Clause
+
+using System.Reflection;
 
 using Content.Code.Utility;
 
