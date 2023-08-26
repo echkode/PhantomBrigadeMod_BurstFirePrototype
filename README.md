@@ -6,7 +6,7 @@ It is compatible with game version **1.1.2-b5993** (Epic/Steam).
 
 There is a `PartEventsTargeted` event triggered in `ScheduledAttackSystem` after a projectile has been created and configured. The event interface function has sufficient information passed to it to easily implement tracer rounds. For the tracer round effect, every nth projectile has a color override applied to its asset. Other effects like swapping out the asset completely or changing the damge types and so forth can easily be applied.
 
-<video controls src="">
+<video controls src="https://github.com/echkode/PhantomBrigadeMod_BurstFirePrototype/assets/48565771/2f36b5c2-5035-4096-bce6-d60be8e4171e">
   <p>lighting up a dark scene with tracer rounds</p>
 </video>
 
