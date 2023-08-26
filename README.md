@@ -21,7 +21,7 @@ Each branch has a README with some notes about the changes introduced in that br
 
 I prototyped a number of different ways of using interface functions to mod the attack action. There are two main systems of interest, `EquipmentActionSystem` and `ScheduledAttackSystem`.
 
-`EquipmentActionSystem` takes an action for a part with a primary activation subsystem, creates subactions with evenly spaced timings to represent the firing of individual rounds. This is where the built-in activation timing feature makes changes to the round timings.
+`EquipmentActionSystem` takes an action for a part with a primary activation subsystem and creates subactions with evenly spaced timings to represent the firing of individual rounds. This is where the built-in activation timing feature makes changes to the round timings.
 
 `ScheduledAttackSystem` generates projectiles for every subaction created by `EquipmentActionSystem`. This is where the starting and target positions and velocities are calculated and also where properties such as damage and visuals are assigned to the projectile.
 
@@ -53,7 +53,7 @@ Attack subactions are created in `EquipmentActionSystem` in response to an attac
 
 I implemented an emulation of the activation timing feature using a `PartEventsGeneral` function. However, that required a fair amount of lookup which already had been done in `EquipmentActionSystem` and also some inside knowledge about how durations are modified for animation reasons.
 
-Given what I learned using `PartEventsGeneral`, I created a new event interface function that receives sufficient information to make changing fire timings a relatively easy task. In the code, I named the function interface `ISubsystemFunctionFiring` and the event `OnPartEventFiring` but I think better names would be `ISubsystemFunctionSubactionsCreated' and `OnPartEventSubactionsCreated`. This new event should replace the `PartEventsGeneral` event that's triggered.
+Given what I learned using `PartEventsGeneral`, I created a new event interface function that receives sufficient information to make changing fire timings a relatively easy task. In the code, I named the function interface `ISubsystemFunctionFiring` and the event `OnPartEventFiring` but I think better names would be `ISubsystemFunctionSubactionsCreated` and `OnPartEventSubactionsCreated`. This new event should replace the `PartEventsGeneral` event that's triggered.
 
 Here is the interface with the new names.
 ```
@@ -98,7 +98,7 @@ A note about the `firingPoint` and `firingDirection` parameters. These are the p
 
 I tried to follow the pattern of `PartEventsGeneral` where that class implements an extension method on `EquipmentEntity` which iterates through the subsystems in the part and calls a `TryActivation` method on `DataBlockSubsystemFunctionsGeneral`. However, I cannot change the layout of `DataContainerSubsystem` so I was not able to faithfully duplicate this pattern.
 
-The reason I bring this up is because of the `context` parameter in both of the new event interface fuctions. The new event interface functions have different signatures which implies they should belong to different event categories. However, these are fairly narrow and specific events so they're likely going to be the only events in their category and so won't need a context to distinguish invokings. That implies these events shouldn't follow the same event pattern as the other part events and the invoking logic should be made simpler.
+The reason I bring this up is because of the `context` parameter in both of the new event interface fuctions. The new event interface functions have different signatures which implies they should belong to different event categories. However, these are fairly narrow and specific events so they're likely going to be the only events in their category and won't need a context to distinguish invokings. That implies these events shouldn't follow the same event pattern as the other part events and the invoking logic should be made simpler.
 
 ## YAML tag mappings
 
