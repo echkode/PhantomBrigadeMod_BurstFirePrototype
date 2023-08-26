@@ -1,4 +1,7 @@
-﻿using Content.Code.Utility;
+﻿// Copyright (c) 2023 EchKode
+// SPDX-License-Identifier: BSD-3-Clause
+
+using Content.Code.Utility;
 
 using UnityEngine;
 
