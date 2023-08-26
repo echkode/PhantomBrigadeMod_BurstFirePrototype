@@ -10,10 +10,10 @@ This README is broken up into different sections.
 
 - A [summary](#synopsis) of what I looked at and what changes I recommend
 - The [branches](#branches) in the repo
-- Details about a new interface for the [subactions created event](#details on new interface for subactions created event)
-- Details about a new interface for the [projectile created event](#details on new interface for projectile created event)
-- About the [part event pattern](#partevents pattern)
-- Registering [YAML tag mappings](#yaml tag mappings)
+- Details about a new interface for the [subactions created event](#details-on-new-interface-for-subactions-created-event)
+- Details about a new interface for the [projectile created event](#details-on-new-interface-for-projectile-created-event)
+- About the [part event pattern](#partevents-pattern)
+- Registering [YAML tag mappings](#yaml-tag-mappings)
 
 Each branch has a README with some notes about the changes introduced in that branch. The intention is to keep this document as concise as possible.
 
