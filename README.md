@@ -1,5 +1,7 @@
 # BurstFire
 
+*This mod is obsolete.* There have been two minor releases of the game since this work was done and much has changed.
+
 A library mod for [Phantom Brigade](https://braceyourselfgames.com/phantom-brigade/) to prototype using subsystem functions for manipulating fired round effects like timing.
 
 It is compatible with game version **1.1.2-b5993** (Epic/Steam).
